@@ -110,3 +110,9 @@ static/results
 *.h5
 *model.json
 *.pth
+
+# VSCode extenions
+.vscode/
+
+# my files
+dataset/
