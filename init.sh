@@ -71,8 +71,13 @@ download_google_drive_file \
     "moran_v2_demo.pth"
 echo
 
-# GET BACK TO PARENT
 cd ..
 echo
+
+# INSTALL PIP REQUIREMENTS
+echo "---------- INSTALL PIP REQUIREMENTS -----------"
+python3 -m pip install --user -r requirements.txt
+echo
+
 echo "READY!"
 echo
