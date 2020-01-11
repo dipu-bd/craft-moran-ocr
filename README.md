@@ -13,3 +13,11 @@ An OCR system using CRAFT for text detection and MORAN for recognition
 - [MORAN_v2](https://github.com/Canjie-Luo/MORAN_v2): MORAN is a network with rectification mechanism for general scene text recognition.
   The paper (accepted to appear in Pattern Recognition, 2019) in [arXiv](https://arxiv.org/abs/1901.03003),
   [final](https://www.sciencedirect.com/science/article/pii/S0031320319300263) version is available now.
+
+## Testing
+
+- Run `pip3 install --user -r requirements.txt` to install dependencies
+- Run `sh init.sh` to get necessary dataset.
+- Run `python3 . scan/1.jpg` or `python3 . <your-image-path>`
+- OCR results are stored in `output/` folder. You can change it in `__main__.py`
+- Modify `train_MORAN.sh` to generated trained weights, and replace `moran_v2_demo.pth` with it.
