@@ -1,6 +1,6 @@
 #!bin/sh
 
-DATASET_FOLDER="dataset"
+DATASET_FOLDER="data"
 
 verify_checksum() {
     local file=$1

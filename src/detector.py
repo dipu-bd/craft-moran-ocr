@@ -19,7 +19,7 @@ from torch.autograd import Variable
 from .craft import craft_utils, imgproc
 from .craft.craft import CRAFT
 
-DATASET = (Path(__file__).parent / '..' / 'dataset').resolve()
+DATASET = (Path(__file__).parent / '..' / 'data').resolve()
 
 
 def _copyStateDict(state_dict):
@@ -52,7 +52,8 @@ class Detector:
     def load(self):
         self.net = CRAFT()     # initialize
 
-        if self.cuda:
+        if torch.cuda.is_available():
+            self.cuda = True
             self.net.load_state_dict(_copyStateDict(torch.load(self.trained_model)))
         else:
             self.net.load_state_dict(_copyStateDict(
@@ -65,7 +66,7 @@ class Detector:
             cudnn.benchmark = False
         # end if
 
-        # self.net.eval()
+        self.net.eval()
 
         # LinkRefiner
         self.refine_net = None
@@ -109,7 +110,7 @@ class Detector:
 
         # refine link
         if self.refine_net is not None:
-            y_refiner = refine_net(y, feature)
+            y_refiner = self.refine_net(y, feature)
             score_link = y_refiner[0, :, :, 0].cpu().data.numpy()
         # end if
 

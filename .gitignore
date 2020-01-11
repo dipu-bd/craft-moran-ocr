@@ -115,4 +115,5 @@ static/results
 .vscode/
 
 # my files
-dataset/
+/data/
+/test/
