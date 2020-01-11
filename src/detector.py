@@ -4,15 +4,17 @@ import os
 import sys
 import time
 import zipfile
-from pathlib import Path
 from collections import OrderedDict
+from functools import cmp_to_key
+from pathlib import Path
+
+from PIL import Image
 
 import cv2
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
 import torch.nn as nn
-from PIL import Image
 from skimage import io
 from torch.autograd import Variable
 
@@ -131,7 +133,7 @@ class Detector:
             # end if
         # end for
 
-        # transform and sort boxes
+        # transform boxes to top-left and bottom-right points
         rects = list()
         for box in boxes:
             poly = np.array(box).astype(np.int32)
@@ -140,11 +142,34 @@ class Detector:
             rects.append([x0, y0, x1, y1])
         # end for
 
-        # TODO: properly sort rectangles
+        # comparator to sort rectangles in LTR text mode
+        def compare_rect(first_rect, second_rect):
+            fx, fy, fxi, fyi = first_rect
+            sx, sy, sxi, syi = second_rect
+            if fxi <= sx:
+                return -1  # completely on above
+            elif sxi <= fx:
+                return 1    # completely on below
+            elif fyi <= fy:
+                return -1  # completely on left
+            elif sxi <= sx:
+                return 1  # completely on right
+            elif fy != sy:
+                return -1 if fy < sy else 1  # starts on more left
+            elif fx != sx:
+                return -1 if fx < sx else 1  # top most when starts equally
+            elif fyi != syi:
+                return -1 if fyi < syi else 1  # have least width
+            elif fxi != sxi:
+                return -1 if fxi < sxi else 1  # have laast height
+            else:
+                return 0  # same
+            # end if
+        # end def
 
         # extract ROIs
         roi = list()
-        for rect in sorted(rects):
+        for rect in sorted(rects, key=cmp_to_key(compare_rect)):
             x0, y0, x1, y1 = rect
             sub = image[x0:x1, y0:y1, :]
             roi.append(sub)
