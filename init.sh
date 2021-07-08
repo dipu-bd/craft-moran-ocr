@@ -74,10 +74,5 @@ echo
 cd ..
 echo
 
-# INSTALL PIP REQUIREMENTS
-echo "---------- INSTALL PIP REQUIREMENTS -----------"
-python3 -m pip install --user -r requirements.txt
-echo
-
 echo "READY!"
 echo

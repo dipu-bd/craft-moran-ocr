@@ -16,7 +16,27 @@ An OCR system using CRAFT for text detection and MORAN for recognition
 
 ## Testing
 
-- Run `sh init.sh` to get started
-- Run `python3 . scan/1.jpg` or `python3 . <your-image-path>`
-- OCR results are stored in `output/` folder. You can change it in `__main__.py`
-- Modify `train_MORAN.sh` to generated trained weights, and replace `moran_v2_demo.pth` with it
+To get started, first download the trained weights:
+
+```
+$ sh init.sh
+````
+
+Create a virtual environment and install requirements:
+
+```
+$ python3 -m venv venv
+$ source venv/bin/activate
+$ pip install -r requirements.txt
+```
+
+To test an image:
+
+```
+$ python test.py -h
+$ python test.py scan/1.jpg
+```
+
+## Taining
+
+Modify `train_MORAN.sh` to generated trained weights, and replace `moran_v2_demo.pth` with it.
