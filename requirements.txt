@@ -1,6 +1,6 @@
 -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
 Pillow
-torch==2.2.0
+torch==2.6.0
 torchvision==0.9.1+cpu
 opencv-python>=4.1.2.30
 scikit-image>=0.16.2
